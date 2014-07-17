@@ -389,6 +389,50 @@ namespace Automation_Example
         }
 
 
+        /* The number of transactions that are present at one time. */
+        public const int TRANS_PER_PAGINATION = 20;
+
+        /* collect_all_trans_fields
+         * --------------------
+         * Collects the transaction fields defined above for all of the current transactions present.
+         * Due to an Exception Error that appears somewhat randomly which is due to the test trying to find an element
+         * that is not quite in view yet, when this error occurs, the test will wait the specified time above then try
+         * to access the element again. By the time it waits, the element is ready to be accessed and the error does not
+         * occur again allowing the program to proceed forward without problem.
+         */
+        private List<String>[] collect_all_trans_fields()
+        {
+            IJavaScriptExecutor js = driver as IJavaScriptExecutor;
+            WebDriverWait wait;
+            List<String>[] trans_array = new List<String>[TRANS_PER_PAGINATION];
+            for (int i = 0; i < trans_array.Length; i++)
+            {
+                trans_array[i] = new List<String>();
+            }
+
+            foreach (String field in TRANSACTION_FIELDS)
+            {
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
+                wait.Until(d => d.FindElement(By.XPath("//td [contains(@data-field, '" + field + "')]")));
+                try
+                {
+                    IReadOnlyCollection<IWebElement> elems = driver.FindElements(By.XPath("//td [contains(@data-field, '" + field + "')]"));
+                    IEnumerator<IWebElement> ienum = elems.GetEnumerator();
+                    for (int i = 0; ienum.MoveNext(); i++) trans_array[i].Add((String)js.ExecuteScript("return arguments[0].textContent", ienum.Current));
+                }
+                catch
+                {
+                    System.Threading.Thread.Sleep(TRY_AGAIN_WAIT_TIME);
+                    IReadOnlyCollection<IWebElement> elems = driver.FindElements(By.XPath("//td [contains(@data-field, '" + field + "')]"));
+                    IEnumerator<IWebElement> ienum = elems.GetEnumerator();
+                    for (int i = 0; ienum.MoveNext(); i++) trans_array[i].Add((String)js.ExecuteScript("return arguments[0].textContent", ienum.Current));
+                }
+            }
+            if (trans_array == null) Console.WriteLine("collect_all: trans_array == null");
+            return trans_array;
+        }
+
+
         /* are_equal_lists
          * ---------------
          * Checks if the two lists have the same strings.
@@ -406,28 +450,61 @@ namespace Automation_Example
         }
 
 
+        /* not_in_list_arr
+         * ---------------
+         * Returns true if the given list does not have the same contents of any of the lists in the given list array.
+         */
+        private bool not_in_list_arr(List<String> list, List<String>[] lists)
+        {
+            for (int i = 0; i < lists.Length; i++)
+            {
+                if (are_equal_lists(list, lists[i]))
+                {
+                    Console.WriteLine("In list arr");
+                    return false;
+                }
+            }
+            Console.WriteLine("Not in list arr");
+            return true;
+        }
+
+
         /* collect_displayed_fields
          * ------------------------
          * Collects the fields of the given type and puts them into the given list.
          */
-        private void collect_displayed_fields(List<String> collected_fields, String field)
+        private void collect_displayed_fields(List<String> collected_fields, String field, List<String>[] new_all_fields, List<String>[] old_all_fields)
         {
             IJavaScriptExecutor js = driver as IJavaScriptExecutor;
             IReadOnlyCollection<IWebElement> elems = driver.FindElements(By.XPath("//td [contains(@data-field, '" + field + "')]"));
             IEnumerator<IWebElement> ienum = elems.GetEnumerator();
-            while (ienum.MoveNext()) collected_fields.Add((String)js.ExecuteScript("return arguments[0].textContent", ienum.Current));
+            bool stop_checking = false;
+            for (int i = 0; ienum.MoveNext(); i++)
+            {
+                if (old_all_fields == null || stop_checking || not_in_list_arr(new_all_fields[i], old_all_fields))
+                {
+                    if (new_all_fields == null) Console.WriteLine("new_all_fields == null");
+                    if (old_all_fields == null) Console.WriteLine("old_all_fields == null");
+                    //stop_checking = true;
+                    collected_fields.Add((String)js.ExecuteScript("return arguments[0].textContent", ienum.Current));
+                }
+            }
         }
 
 
         /* get_fields
          * ----------
-         * 
+         * Collects a list of fields of the given type of field, scrolling down the screen to have pagination load more until
+         * the given number of paginations have occurred.
          */
-        private List<String> get_fields(String field)
+        private List<String> get_fields(int n, String field)
         {
             IWebElement bar = driver.FindElement(By.XPath("//div [contains(@class, 'k-scrollbar k-scrollbar-vertical')]"));
             List<String> collected_fields = new List<String>();
-            collect_displayed_fields(collected_fields, field);
+            List<String>[] new_all_fields = null;
+            List<String>[] old_all_fields = null;
+            new_all_fields = collect_all_trans_fields();
+            collect_displayed_fields(collected_fields, field, new_all_fields, old_all_fields);
             Console.WriteLine("Fields size: " + collected_fields.Count);
             foreach (String f in collected_fields)
             {
@@ -435,7 +512,7 @@ namespace Automation_Example
             }
             Console.WriteLine("End.");
 
-            for (int i = 0; i < (NUM_TRANS_TO_VERIFY / 20) - 1; i++)
+            for (int i = 0; i < n; i++)
             {
                 List<String> top_trans_fields = collect_top_trans_fields();
                 int loop_count = 0;
@@ -450,8 +527,13 @@ namespace Automation_Example
                         break;
                     }
                 }
-                if (do_collect) collect_displayed_fields(collected_fields, field);
-                if (!do_collect) i = (NUM_TRANS_TO_VERIFY / 20) - 1;
+                if (new_all_fields == null) Console.WriteLine("after break: new_all_fields == null");
+                old_all_fields = new_all_fields;
+                if (old_all_fields == null) Console.WriteLine("after break: old_all_fields == null");
+                new_all_fields = collect_all_trans_fields();
+                if (do_collect) collect_displayed_fields(collected_fields, field, new_all_fields, old_all_fields);
+                if (!do_collect) i = n;
+                
 
 
                 Console.WriteLine("Fields size: " + collected_fields.Count);
@@ -508,9 +590,9 @@ namespace Automation_Example
         /* A constant for which Orpheus website to use in the following test */
         public const string ORPHEUS_URL_3 = "https://web.orpheusdev.net/";
 
-        /* A constant to determine the max number of transactions the test should collect to check if the transactions 
-         * are sorted. Should be a multiple of 20 since transactions are loaded in groups of 20. @@@@@ MAKE IT BASED ON NUM PAGINATIONS @@@@@*/
-        public const int NUM_TRANS_TO_VERIFY = 100;
+        /* A constant to determine the max number of paginations the test should have occur before checking if the transactions 
+         * are sorted. */
+        public const int NUM_PAGINATIONS = 4;
 
         /* Specifies which fields by which to check if the transactions are sorted. @@@@@@@@ ACCOUNT FOR WHICH FIELD IS FIRST WHICH MAY ALREADY BE SORTED @@@@@@@ */
         public string[] FIELDS_TO_TEST = { "Amount" };//{ "Amount", "Description", "Date" };
@@ -563,12 +645,12 @@ namespace Automation_Example
                 driver.FindElement(By.XPath("//th [contains (@data-title, '" + field + "')]")).Click();
                 wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
                 wait.Until(d => d.FindElement(By.XPath("//th [contains(@data-field, '" + field + "') and contains (@aria-sort, 'ascending')]")));
-                verify_sorted(get_fields(field), field, false);
+                verify_sorted(get_fields(NUM_PAGINATIONS, field), field, false);
 
                 driver.FindElement(By.XPath("//th [contains (@data-title, '" + field + "')]")).Click();
                 wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
                 wait.Until(d => d.FindElement(By.XPath("//th [contains(@data-field, '" + field + "') and contains (@aria-sort, 'descending')]")));
-                verify_sorted(get_fields(field), field, true);
+                verify_sorted(get_fields(NUM_PAGINATIONS,field), field, true);
             }
         }
 
