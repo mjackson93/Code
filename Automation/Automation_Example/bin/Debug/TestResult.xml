@@ -1,15 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Users\Admin\Documents\Visual Studio 2013\Projects\Automation_Example\Automation_Example\bin\Debug\Automation_Example.dll" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-07-16" time="16:53:22">
+<test-results name="C:\Users\Admin\Documents\Visual Studio 2013\Projects\Automation_Example\Automation_Example\bin\Debug\Automation_Example.dll" total="1" errors="0" failures="1" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-07-17" time="14:15:07">
   <environment nunit-version="2.6.3.13283" clr-version="2.0.50727.5477" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Users\Admin\Documents\Visual Studio 2013\Projects\Automation_Example\Automation_Example\bin\Debug" machine-name="LENOVOB590-QA-M" user="Admin" user-domain="LenovoB590-QA-M" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="Assembly" name="C:\Users\Admin\Documents\Visual Studio 2013\Projects\Automation_Example\Automation_Example\bin\Debug\Automation_Example.dll" executed="True" result="Success" success="True" time="188.843" asserts="0">
+  <test-suite type="Assembly" name="C:\Users\Admin\Documents\Visual Studio 2013\Projects\Automation_Example\Automation_Example\bin\Debug\Automation_Example.dll" executed="True" result="Failure" success="False" time="80.945" asserts="0">
     <results>
-      <test-suite type="Namespace" name="Automation_Example" executed="True" result="Success" success="True" time="188.834" asserts="0">
+      <test-suite type="Namespace" name="Automation_Example" executed="True" result="Failure" success="False" time="80.938" asserts="0">
         <results>
-          <test-suite type="TestFixture" name="Driver" executed="True" result="Success" success="True" time="188.833" asserts="0">
+          <test-suite type="TestFixture" name="Driver" executed="True" result="Failure" success="False" time="80.934" asserts="0">
             <results>
-              <test-case name="Automation_Example.Driver.web_verify_history_sorted" executed="True" result="Success" success="True" time="188.822" asserts="0" />
+              <test-case name="Automation_Example.Driver.verify_history_sorted" executed="True" result="Failure" success="False" time="80.925" asserts="20">
+                <failure>
+                  <message><![CDATA[  Expected: less than or equal to -841.11000000000001d
+  But was:  -828.08000000000004d
+]]></message>
+                  <stack-trace><![CDATA[at Automation_Example.Driver.verify_sorted(List`1 fields, String type, Boolean descend) in c:\Users\Admin\Documents\Visual Studio 2013\Projects\Automation_Example\Automation_Example\NUnit_Tests.cs:line 505
+at Automation_Example.Driver.verify_history_sorted() in c:\Users\Admin\Documents\Visual Studio 2013\Projects\Automation_Example\Automation_Example\NUnit_Tests.cs:line 572
+]]></stack-trace>
+                </failure>
+              </test-case>
             </results>
           </test-suite>
         </results>
