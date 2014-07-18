@@ -101,248 +101,6 @@ namespace Automation_Example
 
 
 
-        ////***Verify History Sorted Test***
-
-        //        //Specific Helper functions
-
-        ///* collect_elem_fields
-        // * -------------------
-        // * 
-        // */
-        //private List<String> collect_elem_fields()
-        //{
-        //    IJavaScriptExecutor js = driver as IJavaScriptExecutor;
-        //    WebDriverWait wait;
-
-        //    List<String> topmost_fields = new List<String>();
-        //    //IWebElement elem = driver.FindElement(By.XPath("//td [contains(@data-field, 'AccountId')]"));
-        //    wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
-        //    wait.Until(d => d.FindElement(By.XPath("//td [contains(@data-field, 'AccountId')]")));
-        //    try
-        //    {
-        //        topmost_fields.Add((String)js.ExecuteScript("return arguments[0].textContent",
-        //            driver.FindElement(By.XPath("//td [contains(@data-field, 'AccountId')]"))));
-        //    }
-        //    catch
-        //    {
-        //        System.Threading.Thread.Sleep(500);
-        //        topmost_fields.Add((String)js.ExecuteScript("return arguments[0].textContent",
-        //            driver.FindElement(By.XPath("//td [contains(@data-field, 'AccountId')]"))));
-        //    }
-        //    //elem = driver.FindElement(By.XPath("//td [contains(@data-field, 'Date')]"));
-        //    wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
-        //    wait.Until(d => d.FindElement(By.XPath("//td [contains(@data-field, 'Date')]")));
-        //    try
-        //    {
-        //        topmost_fields.Add((String)js.ExecuteScript("return arguments[0].textContent",
-        //            driver.FindElement(By.XPath("//td [contains(@data-field, 'Date')]"))));
-        //    }
-        //    catch
-        //    {
-        //        System.Threading.Thread.Sleep(500);
-        //        topmost_fields.Add((String)js.ExecuteScript("return arguments[0].textContent",
-        //            driver.FindElement(By.XPath("//td [contains(@data-field, 'Date')]"))));
-        //    }
-        //    //elem = driver.FindElement(By.XPath("//td [contains(@data-field, 'Description')]"));
-        //    wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
-        //    wait.Until(d => d.FindElement(By.XPath("//td [contains(@data-field, 'Description')]")));
-        //    try
-        //    {
-        //        topmost_fields.Add((String)js.ExecuteScript("return arguments[0].textContent",
-        //            driver.FindElement(By.XPath("//td [contains(@data-field, 'Description')]"))));
-        //    }
-        //    catch
-        //    {
-        //        System.Threading.Thread.Sleep(500);
-        //        topmost_fields.Add((String)js.ExecuteScript("return arguments[0].textContent",
-        //            driver.FindElement(By.XPath("//td [contains(@data-field, 'Description')]"))));
-        //    }
-        //    return topmost_fields;
-        //}
-
-
-        ///* are_elems_equal
-        // * ---------------
-        // * 
-        // */
-        //private bool are_elems_equal(List<String> elem1, List<String> elem2)
-        //{
-        //    for (int i = 0; i < elem1.Count; i++)
-        //    {
-        //        if (!elem1[i].Equals(elem2[i]))//(elem1[i] != elem2[i])
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    return true;
-        //}
-
-        ///* print_element_when_comp
-        // * -----------------------
-        // * 
-        // */
-        //private void print_element_when_comp(List<String> elem1, List<String> elem2)
-        //{
-        //    Console.Write("elem1: ");
-        //    foreach (String str in elem1)
-        //    {
-        //        Console.Write(str + ", ");
-        //    }
-        //    Console.WriteLine();
-
-        //    Console.Write("elem2: ");
-        //    foreach (String str in elem2)
-        //    {
-        //        Console.Write(str + ", ");
-        //    }
-        //    Console.WriteLine();
-        //}
-
-
-        ///* get_topmost
-        // * -----------
-        // * 
-        // */
-        //private IWebElement get_topmost(IReadOnlyCollection<IWebElement> elems)
-        //{
-        //    IEnumerator<IWebElement> ienum = elems.GetEnumerator();
-        //    ienum.MoveNext();
-        //    return ienum.Current;
-        //}
-
-
-        ///* process_new_dates
-        // * -----------------
-        // * 
-        // */
-        //private void process_new_dates(List<String> dates)
-        //{
-        //    IJavaScriptExecutor js = driver as IJavaScriptExecutor;
-        //    IReadOnlyCollection<IWebElement> elems = driver.FindElements(By.XPath("//td [contains(@data-field, 'Date')]"));
-        //    IEnumerator<IWebElement> ienum = elems.GetEnumerator();
-        //    while (ienum.MoveNext())
-        //    {
-        //        dates.Add((String)js.ExecuteScript("return arguments[0].textContent", ienum.Current));
-        //        //dates.Add((ienum.Current).Text);
-        //    }
-        //}
-
-
-        ///* is_earlier
-        // * ---------------
-        // * Returns true if the first date comes before the second.
-        // */
-        //private bool is_earlier(String date1, String date2)
-        //{
-
-        //    return true;
-        //}
-
-
-        ///* verify_sorted
-        // * -------------
-        // * 
-        // */
-        //private void verify_sorted(List<String> dates)
-        //{
-
-        //}
-
-
-        //        // Specific Constants
-        
-        ///* */
-
-
-
-
-        ///* web_verify_history_sorted
-        // * -------------------------
-        // * 
-        // */
-        //[Test]
-        //public void web_verify_history_sorted()
-        //{
-        //    String url = "https://web.orpheusdev.net/";
-        //    driver.Navigate().GoToUrl(url);
-        //    Actions action = new Actions(driver);
-        //    IJavaScriptExecutor js = driver as IJavaScriptExecutor;
-        //    WebDriverWait wait;
-        //    IWebElement elem;
-
-        //    //Bypasses the first three screens
-        //    site_login("admin", "cat", "1234", action);
-
-        //    //Dashboard screen
-        //    //Click History
-        //    driver.FindElement(By.XPath("//a [contains(@href, '/payments/index')]")).Click();
-        //    driver.FindElement(By.XPath("//a [contains(@href, '/accounts/history')]")).Click();
-        //    wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
-        //    wait.Until(d => d.FindElement(By.XPath("//div [contains(@class, 'k-scrollbar k-scrollbar-vertical')]")));
-        //    wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
-        //    wait.Until(d => d.FindElement(By.XPath("//td [contains(@data-field, 'Date')]")));
-
-        //    //
-        //    IWebElement bar = driver.FindElement(By.XPath("//div [contains(@class, 'k-scrollbar k-scrollbar-vertical')]"));
-        //    List<String> dates = new List<String>();
-        //    List<String> top_fields = collect_elem_fields();
-
-
-        //    //System.Threading.Thread.Sleep(6000);
-        //    //driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(2));
-        //    //bool inf_looping = false;
-        //    for (int i = 0; i < 5; i++)
-        //    {
-        //        process_new_dates(dates);
-        //        Console.WriteLine("Dates size: " + dates.Count);
-        //        foreach (String date in dates)
-        //        {
-        //            Console.WriteLine("\"" + date + "\"");
-        //        }
-        //        Console.WriteLine("End.");
-
-        //        //int loop_check = 0;
-        //        List<String> test_fields = collect_elem_fields();
-        //        while (are_elems_equal(top_fields, test_fields))
-        //        {
-        //            for (int j = 0; j < 1; j++)
-        //            {
-        //                bar.SendKeys(Keys.ArrowDown);
-        //            }
-        //            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
-        //            wait.Until(d => d.FindElement(By.XPath("//td [contains(@data-field, 'Date')]")));
-        //            //loop_check++;
-        //            //if (loop_check > 80)
-        //            //{
-        //            //    Console.WriteLine("Infinite loop");
-        //            //    inf_looping = true;
-        //            //    break;
-        //            //}
-        //            test_fields = collect_elem_fields();
-        //            //System.Threading.Thread.Sleep(500);
-        //        }
-        //        //if (inf_looping) i = 2;
-        //        top_fields = collect_elem_fields();
-        //    }
-
-        //    //IReadOnlyCollection<IWebElement> elems = driver.FindElements(By.XPath("//td [contains(@data-field, 'Date')]"));
-        //    //process_new_dates(dates, elems.GetEnumerator());
-
-        //    //Console.WriteLine("Dates size: " + dates.Count);
-        //    //foreach (String date in dates)
-        //    //{
-        //    //    Console.WriteLine("\"" + date + "\"");
-        //    //}
-        //    //Console.WriteLine("End.");
-
-        //    verify_sorted(dates);
-        //}
-
-
-
-
-
-
         //***Verify History Sorted Test***
 
                 //Specific Helper functions
@@ -428,7 +186,6 @@ namespace Automation_Example
                     for (int i = 0; ienum.MoveNext(); i++) trans_array[i].Add((String)js.ExecuteScript("return arguments[0].textContent", ienum.Current));
                 }
             }
-            if (trans_array == null) Console.WriteLine("collect_all: trans_array == null");
             return trans_array;
         }
 
@@ -460,11 +217,9 @@ namespace Automation_Example
             {
                 if (are_equal_lists(list, lists[i]))
                 {
-                    Console.WriteLine("In list arr");
                     return false;
                 }
             }
-            Console.WriteLine("Not in list arr");
             return true;
         }
 
@@ -483,9 +238,7 @@ namespace Automation_Example
             {
                 if (old_all_fields == null || stop_checking || not_in_list_arr(new_all_fields[i], old_all_fields))
                 {
-                    if (new_all_fields == null) Console.WriteLine("new_all_fields == null");
-                    if (old_all_fields == null) Console.WriteLine("old_all_fields == null");
-                    //stop_checking = true;
+                    stop_checking = true;
                     collected_fields.Add((String)js.ExecuteScript("return arguments[0].textContent", ienum.Current));
                 }
             }
@@ -505,12 +258,6 @@ namespace Automation_Example
             List<String>[] old_all_fields = null;
             new_all_fields = collect_all_trans_fields();
             collect_displayed_fields(collected_fields, field, new_all_fields, old_all_fields);
-            Console.WriteLine("Fields size: " + collected_fields.Count);
-            foreach (String f in collected_fields)
-            {
-                Console.WriteLine("\"" + f + "\"");
-            }
-            Console.WriteLine("End.");
 
             for (int i = 0; i < n; i++)
             {
@@ -527,24 +274,20 @@ namespace Automation_Example
                         break;
                     }
                 }
-                if (new_all_fields == null) Console.WriteLine("after break: new_all_fields == null");
                 old_all_fields = new_all_fields;
-                if (old_all_fields == null) Console.WriteLine("after break: old_all_fields == null");
                 new_all_fields = collect_all_trans_fields();
                 if (do_collect) collect_displayed_fields(collected_fields, field, new_all_fields, old_all_fields);
                 if (!do_collect) i = n;
-                
-
-
-                Console.WriteLine("Fields size: " + collected_fields.Count);
-                foreach (String f in collected_fields)
-                {
-                    Console.WriteLine("\"" + f + "\"");
-                }
-                Console.WriteLine("End.");
             }
             return collected_fields;
         }
+
+        //Console.WriteLine("Fields size: " + collected_fields.Count);
+        //    foreach (String f in collected_fields)
+        //    {
+        //        Console.WriteLine("\"" + f + "\"");
+        //    }
+        //    Console.WriteLine("End. Fields size: " + collected_fields.Count);
 
 
         /* convert_to_double
@@ -561,7 +304,7 @@ namespace Automation_Example
                 val = val.Replace('$', '-');
             }
             else val = val.Replace('$', ' ').Trim();
-            Console.WriteLine("val: " + val);
+            //Console.WriteLine("val: " + val);
             return Convert.ToDouble(val);
         }
 
@@ -574,16 +317,38 @@ namespace Automation_Example
         {
             if (type.Equals("Amount"))
             {
-                String[] arr = fields.ToArray();
-                for (int i = 0; i < arr.Length - 1; i++)
+                for (int i = 0; i < fields.Count - 1; i++)
                 {
-                    if (descend) Assert.GreaterOrEqual(convert_to_double(arr[i]), convert_to_double(arr[i + 1]));
-                    else Assert.LessOrEqual(convert_to_double(arr[i]), convert_to_double(arr[i + 1]));
+                    if (descend) Assert.GreaterOrEqual(convert_to_double(fields[i]), convert_to_double(fields[i + 1]));
+                    else Assert.LessOrEqual(convert_to_double(fields[i]), convert_to_double(fields[i + 1]));
                 }
+                Console.WriteLine("Amounts verified");
+            }
+            else if (type.Equals("Description"))
+            {
+                for (int i = 0; i < fields.Count - 1; i++)
+                {
+                    if (descend) Assert.GreaterOrEqual(fields[i], fields[i + 1]);
+                    else Assert.LessOrEqual(fields[i], fields[i + 1]);
+                }
+                Console.WriteLine("Descriptions verified");
+            }
+            else if (type.Equals("Date"))
+            {
+                DateTime[] dates = new DateTime[fields.Count];
+                for (int i = 0; i < fields.Count; i++)
+                {
+                    dates[i] = new DateTime(Convert.ToInt32(fields[i].Substring(6, 2)), 
+                        Convert.ToInt32(fields[i].Substring(0, 2)), Convert.ToInt32(fields[i].Substring(3, 2)));
+                }
+                for (int i = 0; i < dates.Length - 1; i++)
+                {
+                    if (descend) Assert.GreaterOrEqual(dates[i], dates[i + 1]);
+                    else Assert.LessOrEqual(dates[i], dates[i + 1]);
+                }
+                Console.WriteLine("Dates verified");
             }
         }
-
-
 
 
                 //Specific Constants
@@ -592,10 +357,10 @@ namespace Automation_Example
 
         /* A constant to determine the max number of paginations the test should have occur before checking if the transactions 
          * are sorted. */
-        public const int NUM_PAGINATIONS = 4;
+        public const int NUM_PAGINATIONS = 1;
 
-        /* Specifies which fields by which to check if the transactions are sorted. @@@@@@@@ ACCOUNT FOR WHICH FIELD IS FIRST WHICH MAY ALREADY BE SORTED @@@@@@@ */
-        public string[] FIELDS_TO_TEST = { "Amount" };//{ "Amount", "Description", "Date" };
+        /* Specifies which fields by which to check if the transactions are sorted. */
+        public string[] FIELDS_TO_TEST = { "Date", "Description", "Amount" };
 
         /* The number of down presses sent before checking if pagination has occurred. */
         public const int DOWN_PRESSES_PER_CHECK = 1;
@@ -603,6 +368,10 @@ namespace Automation_Example
         /* The number of times the loop to check for pagination should run before assuming the bar has reached the 
          * bottom of the page. */
         public const int NUM_LOOPS_BEF_AT_BOTTOM = 50;
+
+        /* The number of times after verifying a field was sorted correctly in a direction that it scrolls the screen
+         * back up before testing the next field or direction. */
+        public const int NUM_TIMES_BACK_UP = 3;
         
         /* web_verify_history_sorted
          * -------------------------
@@ -621,7 +390,6 @@ namespace Automation_Example
             Actions action = new Actions(driver);
             IJavaScriptExecutor js = driver as IJavaScriptExecutor;
             WebDriverWait wait;
-            IWebElement elem;
 
             // Logs in as admin
             site_login("admin", "cat", "1234", action);
@@ -629,8 +397,8 @@ namespace Automation_Example
 
             //Dashboard screen
             //Go to History
-            driver.FindElement(By.XPath("//a [contains(@href, '/payments/index')]")).Click();
-            if (SLEEP_ON) System.Threading.Thread.Sleep(SLEEP_TIME);
+                        //driver.FindElement(By.XPath("//a [contains(@href, '/payments/index')]")).Click();
+                        //if (SLEEP_ON) System.Threading.Thread.Sleep(SLEEP_TIME);
             driver.FindElement(By.XPath("//a [contains(@href, '/accounts/history')]")).Click();
             if (SLEEP_ON) System.Threading.Thread.Sleep(SLEEP_TIME);
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
@@ -642,20 +410,21 @@ namespace Automation_Example
             //History screen
             foreach (String field in FIELDS_TO_TEST)
             {
+                for (int i = 0; i < NUM_TIMES_BACK_UP; i++) driver.FindElement(By.XPath("//div [contains(@class, 'k-scrollbar k-scrollbar-vertical')]")).SendKeys(Keys.ArrowUp);
+
                 driver.FindElement(By.XPath("//th [contains (@data-title, '" + field + "')]")).Click();
                 wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
                 wait.Until(d => d.FindElement(By.XPath("//th [contains(@data-field, '" + field + "') and contains (@aria-sort, 'ascending')]")));
                 verify_sorted(get_fields(NUM_PAGINATIONS, field), field, false);
 
-                driver.FindElement(By.XPath("//th [contains (@data-title, '" + field + "')]")).Click();
+                for (int i = 0; i < NUM_TIMES_BACK_UP; i++) driver.FindElement(By.XPath("//div [contains(@class, 'k-scrollbar k-scrollbar-vertical')]")).SendKeys(Keys.ArrowUp);
+
+                    driver.FindElement(By.XPath("//th [contains (@data-title, '" + field + "')]")).Click();
                 wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
                 wait.Until(d => d.FindElement(By.XPath("//th [contains(@data-field, '" + field + "') and contains (@aria-sort, 'descending')]")));
-                verify_sorted(get_fields(NUM_PAGINATIONS,field), field, true);
+                verify_sorted(get_fields(NUM_PAGINATIONS, field), field, true);
             }
         }
-
-
-
 
 
 
